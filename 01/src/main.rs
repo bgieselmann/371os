@@ -1,14 +1,16 @@
 use std::fs::read_to_string;
 
-const ALPHABET: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 fn main() {
 
-    let mut lines = read_lines("main.rs");
+    let lines = read_lines("main.rs");
+
+    let mut wc = 0;
 
     for line in lines {
-        println!("{}", char_count(line));
+        wc = wc + word_count(line);
     }
+
+    println!("main.rs has word count {}.", wc);
 }
 
 
@@ -22,13 +24,32 @@ fn read_lines(filename: &str) -> Vec<String> {
     result
 }
 
-fn char_count(line: String) -> u32 {
-    let mut chars = line.chars();
+fn word_count(line: String) -> u32 {
+    let chars = line.chars();
+    let mut count = 0;
+    let mut last_char_is_whitespace = true;
+
+    for char in chars {
+        if char.is_whitespace() == false {
+            if last_char_is_whitespace == true {
+                count = count + 1;
+            }
+            last_char_is_whitespace = false;
+        }
+        else {
+            last_char_is_whitespace = true;
+        }
+    }
+    count
+}
+
+fn english_word_count(line: String) -> u32 {
+    let chars = line.chars();
     let mut count = 0;
     let mut last_char_in_alphabet = false;
 
     for char in chars {
-        if ALPHABET.find(char) != None {
+        if char.is_alphabetic() {
             if last_char_in_alphabet == false {
 		count = count + 1;
             }
