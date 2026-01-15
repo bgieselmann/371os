@@ -36,6 +36,7 @@ fn read_lines(filename: &str) -> Vec<String> {
 
 fn byte_count(line: String) -> usize {
     line.len()
+    // note this doesn't include the newline character
 }
 
 fn word_count(line: String) -> u32 {
