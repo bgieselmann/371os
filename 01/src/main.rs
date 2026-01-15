@@ -1,18 +1,26 @@
 use std::fs::read_to_string;
+use std::env;
 
 fn main() {
+    let args:Vec<String> = env::args().collect();
 
-    let lines = read_lines("main.rs");
+    let file_path = &args[1];
 
+    let lines = read_lines(file_path);
+
+    let mut lc = 0;
     let mut wc = 0;
     let mut bc = 0;
 
     for line in lines {
+        lc = lc + 1;
         wc = wc + word_count(line.clone());
         bc = bc + byte_count(line.clone());
     }
 
-    println!("main.rs has word count {} and byte count {}.", wc, bc);
+    bc = bc + lc;
+
+    println!("      {}     {}    {} {}", lc, wc, bc, file_path);
 }
 
 
