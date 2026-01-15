@@ -1,5 +1,7 @@
 use std::fs::read_to_string;
 
+const ALPHABET: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 fn main() {
 
     let mut lines = read_lines("main.rs");
@@ -23,10 +25,19 @@ fn read_lines(filename: &str) -> Vec<String> {
 fn char_count(line: String) -> u32 {
     let mut chars = line.chars();
     let mut count = 0;
+    let mut last_char_in_alphabet = false;
 
     for char in chars {
-        count = count + 1;
-    };
+        if ALPHABET.find(char) != None {
+            if last_char_in_alphabet == false {
+		count = count + 1;
+            }
+            last_char_in_alphabet = true;
+        }
+        else {
+            last_char_in_alphabet = false;
+        }
+    }
 
     count
 }
