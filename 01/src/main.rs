@@ -5,12 +5,14 @@ fn main() {
     let lines = read_lines("main.rs");
 
     let mut wc = 0;
+    let mut bc = 0;
 
     for line in lines {
-        wc = wc + word_count(line);
+        wc = wc + word_count(line.clone());
+        bc = bc + byte_count(line.clone());
     }
 
-    println!("main.rs has word count {}.", wc);
+    println!("main.rs has word count {} and byte count {}.", wc, bc);
 }
 
 
@@ -22,6 +24,10 @@ fn read_lines(filename: &str) -> Vec<String> {
     }
 
     result
+}
+
+fn byte_count(line: String) -> usize {
+    line.len()
 }
 
 fn word_count(line: String) -> u32 {
